@@ -33,7 +33,10 @@ npx modelis-openai
 **Run with Docker (no Node needed):**
 
 ```bash
-docker run --rm -p 8787:8787 ghcr.io/REPLACE_ME/modelis-openai
+git clone https://github.com/chenxiao5580-cmd/modelis-openai
+cd modelis-openai
+docker build -t modelis-openai .
+docker run --rm -p 8787:8787 modelis-openai
 ```
 
 Then point your tool at:

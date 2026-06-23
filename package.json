@@ -39,6 +39,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/REPLACE_ME/modelis-openai"
+    "url": "git+https://github.com/chenxiao5580-cmd/modelis-openai.git"
+  },
+  "homepage": "https://github.com/chenxiao5580-cmd/modelis-openai#readme",
+  "bugs": {
+    "url": "https://github.com/chenxiao5580-cmd/modelis-openai/issues"
   }
 }
