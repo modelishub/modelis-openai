@@ -1,0 +1,44 @@
+{
+  "name": "modelis-openai",
+  "version": "0.1.0",
+  "description": "Drop-in OpenAI-compatible local proxy for the Modelis Auto Chat API on RapidAPI. Use Modelis in Aider, Cline, Continue, or any OpenAI SDK with one base_url.",
+  "type": "module",
+  "bin": {
+    "modelis-openai": "modelis-openai.mjs"
+  },
+  "main": "modelis-openai.mjs",
+  "exports": "./modelis-openai.mjs",
+  "scripts": {
+    "start": "node modelis-openai.mjs",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "modelis-openai.mjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "openai",
+    "openai-compatible",
+    "llm",
+    "llm-gateway",
+    "llm-proxy",
+    "rapidapi",
+    "aider",
+    "cline",
+    "continue",
+    "model-routing",
+    "gpt",
+    "claude",
+    "gemini",
+    "modelis"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/REPLACE_ME/modelis-openai"
+  }
+}
