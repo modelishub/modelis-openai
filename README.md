@@ -1,6 +1,6 @@
 # modelis-openai
 
-**Use [Modelis](https://rapidapi.com/chenxiao5580/api/modelis-auto-chat) in Aider, Cline, Continue, or any OpenAI SDK — with one `base_url` and zero migration.**
+**Use [Modelis](https://modelishub.com) in Aider, Cline, Continue, or any OpenAI SDK — one `base_url`, one key for GPT / Claude / Gemini, zero migration.**
 
 Modelis auto-routes every request to the best model (GPT / Claude / Gemini) and
 bills a **flat, predictable price per call — not per token**. It's distributed
@@ -19,9 +19,9 @@ your tool ──OpenAI(Bearer)──▶ modelis-openai (localhost) ──X-Rapid
 
 ## Quickstart
 
-You need a RapidAPI key. Subscribe to the free tier here and copy your key from
-the **Endpoints** tab:
-👉 https://rapidapi.com/chenxiao5580/api/modelis-auto-chat
+You need a Modelis API key (free tier to start). Get one and see all plans on the
+pricing page — subscribe, then copy your key:
+👉 https://modelishub.com/pricing
 
 **Run with Node (18+):**
 
