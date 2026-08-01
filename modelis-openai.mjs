@@ -14,7 +14,7 @@
 //   #                           api_key=<your RapidAPI key>
 //
 // Get your key (and confirm the host) on the listing's "Endpoints" tab:
-//   https://rapidapi.com/chenxiao5580/api/modelis-auto-chat
+//   https://modelishub.com/pricing
 
 import http from 'node:http';
 import https from 'node:https';
