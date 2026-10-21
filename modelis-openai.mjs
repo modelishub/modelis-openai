@@ -24,8 +24,8 @@
 //   # then point your tool at:  base_url=http://127.0.0.1:8787/v1
 //   #                           api_key=<your RapidAPI key>
 //
-// Account keys and billing: https://modelishub.com/about
-// Live per-model rates:     https://modelishub.com/api/pricing
+// Account keys, card packs (Gumroad), and Alipay/WeChat (Afdian):
+//   https://modelishub.com/pricing
 
 import http from 'node:http';
 import https from 'node:https';

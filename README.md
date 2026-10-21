@@ -18,7 +18,7 @@ Modelis is an OpenAI-compatible gateway. With a Modelis account key, point your 
 | `modelis-auto` and `modelis-auto:standard` | $0.02 | 8k / 2k tokens |
 | `modelis-auto:premium` | $0.05 | 4k / 1k tokens |
 
-Above those limits the request is billed per token. Named models (for example `claude-sonnet-4-6` or `deepseek-v4-flash`) are billed per token at the upstream price. Top-ups add a 15% service fee ($10 or ¥72 becomes $8.70 of credit). About 95 models are on the gateway. New accounts get **$1 of free credit**. In the console Wallet, pay by card through Creem, or with Alipay/WeChat through an Afdian redemption code. Billing write-up: https://modelishub.com/about. Live per-model rates: https://modelishub.com/api/pricing.
+Above those limits the request is billed per token. Named models (for example `claude-sonnet-4-6` or `deepseek-v4-flash`) are billed per token at the upstream price. Top-ups add a 15% service fee ($10 or ¥72 becomes $8.70 of credit). About 95 models are on the gateway. New accounts get **$1 of free credit**. In the console Wallet, pay by card through Gumroad, or with Alipay/WeChat through an Afdian redemption code. Packs and the live model list: https://modelishub.com/pricing.
 
 RapidAPI sells a separate key (`X-RapidAPI-Key`; the Basic plan is 100 requests a month). Coding tools send `Authorization: Bearer`. This package is the single-file bridge for that key: a **zero-dependency local proxy** that speaks the OpenAI wire protocol on `127.0.0.1`, rewrites the auth, and forwards to Modelis. A Modelis account key calls `https://modelishub.com/v1` directly.
 
