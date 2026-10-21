@@ -1,11 +1,22 @@
 #!/usr/bin/env node
-// modelis-openai — drop-in OpenAI-compatible proxy for Modelis via RapidAPI.
+// modelis-openai — drop-in OpenAI-compatible proxy for a Modelis RapidAPI key.
 //
-// Point any OpenAI-compatible tool (Aider, Cline, Continue, Cursor, ...) at this
-// local proxy. It rewrites `Authorization: Bearer <your-RapidAPI-key>` into the
-// RapidAPI gateway headers and forwards to the "Modelis Auto Chat" endpoint,
-// which auto-routes every request to the best model (GPT / Claude / Gemini)
-// and bills a flat, predictable per-call price — not per token.
+// A Modelis account key talks to the gateway directly (no proxy):
+//   base_url = https://modelishub.com/v1
+//   Authorization: Bearer sk-...
+//
+// RapidAPI keys use `X-RapidAPI-Key` instead of Bearer. Point any
+// OpenAI-compatible tool (Aider, Cline, Continue, Cursor, ...) at this local
+// proxy. It rewrites `Authorization: Bearer <your-RapidAPI-key>` into the
+// RapidAPI gateway headers and forwards to Modelis.
+//
+// `modelis-auto` is the standard auto-router, the same tier as
+// `modelis-auto:standard`: $0.02 per call within 8k input / 2k output tokens,
+// then per token. Other colon tiers: `modelis-auto:basic` ($0.004, 4k in /
+// 1k out) and `modelis-auto:premium` ($0.05, 4k in / 1k out). There is no
+// `modelis-auto:<model>` form and no `:high` or `:low` suffix. Named models
+// are billed per token at the upstream price; a 15% service fee is applied
+// at top-up. New accounts get $1 of free credit. About 95 models.
 //
 // Zero dependencies. Node 18+. Single file. MIT licensed.
 //
@@ -13,7 +24,7 @@
 //   # then point your tool at:  base_url=http://127.0.0.1:8787/v1
 //   #                           api_key=<your RapidAPI key>
 //
-// Get your key (and confirm the host) on the listing's "Endpoints" tab:
+// Account keys, card packs (Gumroad), and Alipay/WeChat (Afdian):
 //   https://modelishub.com/pricing
 
 import http from 'node:http';
@@ -36,12 +47,39 @@ export const config = {
   // Security: if you set this AND bind to a non-loopback address, anyone who can
   // reach the port can spend your RapidAPI quota. Prefer per-client keys.
   envKey: (process.env.MODELIS_RAPIDAPI_KEY || '').trim(),
-  // Model sent upstream. Modelis' paid line serves `modelis-auto`; we rewrite
-  // whatever model name the tool sends so it "just works". Set MODELIS_MODEL=""
-  // to pass the tool's model through untouched.
+  // Model sent upstream. Default `modelis-auto` is the standard tier
+  // ($0.02 within 8k input / 2k output tokens; per token above that). Whatever
+  // model name the tool sends is rewritten to this so a RapidAPI key just
+  // works. Set MODELIS_MODEL to `modelis-auto:basic` or `modelis-auto:premium`
+  // for another tier, or to "" to pass the tool's model through untouched.
+  // Named models and the other tiers are selected on
+  // https://modelishub.com/v1 with a Modelis account key (Bearer sk-...).
   forceModel: process.env.MODELIS_MODEL ?? 'modelis-auto',
 };
 
+/**
+ * Public auto-router ids on https://modelishub.com/v1.
+ * `modelis-auto` is the standard tier (same per-call price and token limits
+ * as `modelis-auto:standard`). Colon form only: basic, standard, premium.
+ * There is no `modelis-auto:<model>` id and no `:high` or `:low` suffix.
+ *
+ * Per call, inside the token limits (requests above the limit are per token):
+ * - `modelis-auto:basic`    $0.004   4k input / 1k output
+ * - `modelis-auto`          $0.02    8k input / 2k output
+ * - `modelis-auto:standard` $0.02    8k input / 2k output
+ * - `modelis-auto:premium`  $0.05    4k input / 1k output
+ *
+ * @type {readonly ['modelis-auto', 'modelis-auto:basic', 'modelis-auto:standard', 'modelis-auto:premium']}
+ */
+export const MODELIS_AUTO_MODELS = Object.freeze([
+  'modelis-auto',
+  'modelis-auto:basic',
+  'modelis-auto:standard',
+  'modelis-auto:premium',
+]);
+
+// What this proxy sends by default. Tools that probe /v1/models see the id
+// the rewrite actually forwards, not every gateway model.
 const MODEL_IDS = ['modelis-auto'];
 
 // Hop-by-hop headers must not be forwarded between connections (RFC 7230 §6.1).
