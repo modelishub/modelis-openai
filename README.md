@@ -14,9 +14,9 @@ Modelis is an OpenAI-compatible gateway. With a Modelis account key, point your 
 
 | Model | Per call, within the limit | Input / output limit |
 |-------|----------------------------|----------------------|
-| `modelis-auto:basic` | $0.004 | 4k / 1k tokens |
-| `modelis-auto` and `modelis-auto:standard` | $0.02 | 8k / 2k tokens |
-| `modelis-auto:premium` | $0.05 | 4k / 1k tokens |
+| `modelis-auto:basic` | $0.008 | 4k / 1k tokens |
+| `modelis-auto` and `modelis-auto:standard` | $0.04 | 8k / 2k tokens |
+| `modelis-auto:premium` | $0.10 | 4k / 1k tokens |
 
 Above those limits the request is billed per token. Named models (for example `claude-sonnet-4-6` or `deepseek-v4-flash`) are billed per token at the upstream price. Top-ups add a 15% service fee ($10 or ¥72 becomes $8.70 of credit). About 95 models are on the gateway. New accounts get **$1 of free credit**. In the console Wallet, pay by card through Gumroad, or with Alipay/WeChat through an Afdian redemption code. Packs and the live model list: https://modelishub.com/pricing.
 
@@ -59,7 +59,7 @@ Then point your tool at the proxy:
 | API key   | *your RapidAPI key*            |
 | Model     | `modelis-auto`                 |
 
-The proxy rewrites the request model to `modelis-auto` (standard tier: $0.02 within 8k input / 2k output tokens, then per token). Set `MODELIS_MODEL` to another tier, or to `""` to pass the tool's model through.
+The proxy rewrites the request model to `modelis-auto` (standard tier: $0.04 within 8k input / 2k output tokens, then per token). Set `MODELIS_MODEL` to another tier, or to `""` to pass the tool's model through.
 
 Verify the proxy is alive:
 

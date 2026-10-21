@@ -11,9 +11,9 @@
 // RapidAPI gateway headers and forwards to Modelis.
 //
 // `modelis-auto` is the standard auto-router, the same tier as
-// `modelis-auto:standard`: $0.02 per call within 8k input / 2k output tokens,
-// then per token. Other colon tiers: `modelis-auto:basic` ($0.004, 4k in /
-// 1k out) and `modelis-auto:premium` ($0.05, 4k in / 1k out). There is no
+// `modelis-auto:standard`: $0.04 per call within 8k input / 2k output tokens,
+// then per token. Other colon tiers: `modelis-auto:basic` ($0.008, 4k in /
+// 1k out) and `modelis-auto:premium` ($0.10, 4k in / 1k out). There is no
 // `modelis-auto:<model>` form and no `:high` or `:low` suffix. Named models
 // are billed per token at the upstream price; a 15% service fee is applied
 // at top-up. New accounts get $1 of free credit. About 95 models.
@@ -48,7 +48,7 @@ export const config = {
   // reach the port can spend your RapidAPI quota. Prefer per-client keys.
   envKey: (process.env.MODELIS_RAPIDAPI_KEY || '').trim(),
   // Model sent upstream. Default `modelis-auto` is the standard tier
-  // ($0.02 within 8k input / 2k output tokens; per token above that). Whatever
+  // ($0.04 within 8k input / 2k output tokens; per token above that). Whatever
   // model name the tool sends is rewritten to this so a RapidAPI key just
   // works. Set MODELIS_MODEL to `modelis-auto:basic` or `modelis-auto:premium`
   // for another tier, or to "" to pass the tool's model through untouched.
@@ -64,10 +64,10 @@ export const config = {
  * There is no `modelis-auto:<model>` id and no `:high` or `:low` suffix.
  *
  * Per call, inside the token limits (requests above the limit are per token):
- * - `modelis-auto:basic`    $0.004   4k input / 1k output
- * - `modelis-auto`          $0.02    8k input / 2k output
- * - `modelis-auto:standard` $0.02    8k input / 2k output
- * - `modelis-auto:premium`  $0.05    4k input / 1k output
+ * - `modelis-auto:basic`    $0.008   4k input / 1k output
+ * - `modelis-auto`          $0.04    8k input / 2k output
+ * - `modelis-auto:standard` $0.04    8k input / 2k output
+ * - `modelis-auto:premium`  $0.10    4k input / 1k output
  *
  * @type {readonly ['modelis-auto', 'modelis-auto:basic', 'modelis-auto:standard', 'modelis-auto:premium']}
  */
