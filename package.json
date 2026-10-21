@@ -1,7 +1,7 @@
 {
   "name": "modelis-openai",
-  "version": "0.1.0",
-  "description": "Drop-in OpenAI-compatible local proxy for the Modelis Auto Chat API on RapidAPI. Use Modelis in Aider, Cline, Continue, or any OpenAI SDK with one base_url.",
+  "version": "0.1.1",
+  "description": "Drop-in OpenAI-compatible local proxy for a Modelis RapidAPI key. Account keys call https://modelishub.com/v1 directly. Use Modelis in Aider, Cline, Continue, or any OpenAI SDK with one base_url.",
   "type": "module",
   "bin": {
     "modelis-openai": "modelis-openai.mjs"

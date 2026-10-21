@@ -11,6 +11,7 @@ import {
   filterResponseHeaders,
   isOpenRelay,
   createServer,
+  MODELIS_AUTO_MODELS,
 } from './modelis-openai.mjs';
 
 test('extractKey parses Bearer token', () => {
@@ -30,7 +31,7 @@ test('extractKey falls back to env key, else null', () => {
 });
 
 test('rewriteBody overrides model when forceModel set', () => {
-  const out = rewriteBody(Buffer.from(JSON.stringify({ model: 'gpt-4o', messages: [] })), 'modelis-auto');
+  const out = rewriteBody(Buffer.from(JSON.stringify({ model: 'gpt-5-mini', messages: [] })), 'modelis-auto');
   assert.equal(JSON.parse(out.toString()).model, 'modelis-auto');
 });
 
@@ -45,7 +46,7 @@ test('rewriteBody preserves other fields', () => {
 });
 
 test('rewriteBody is a no-op when forceModel empty', () => {
-  const original = Buffer.from(JSON.stringify({ model: 'gpt-4o' }));
+  const original = Buffer.from(JSON.stringify({ model: 'gpt-5-mini' }));
   assert.equal(rewriteBody(original, '').toString(), original.toString());
 });
 
@@ -66,6 +67,18 @@ test('modelsPayload lists modelis-auto', () => {
   const p = modelsPayload();
   assert.equal(p.object, 'list');
   assert.ok(p.data.some((m) => m.id === 'modelis-auto'));
+});
+
+test('MODELIS_AUTO_MODELS is the live colon tiers, with modelis-auto as standard', () => {
+  assert.deepEqual([...MODELIS_AUTO_MODELS], [
+    'modelis-auto',
+    'modelis-auto:basic',
+    'modelis-auto:standard',
+    'modelis-auto:premium',
+  ]);
+  for (const id of MODELIS_AUTO_MODELS) {
+    assert.match(id, /^modelis-auto(?::(?:basic|standard|premium))?$/);
+  }
 });
 
 test('upstreamHeaders does not force an Accept header', () => {
@@ -108,7 +121,7 @@ test('routing: 401 without key, /models, /health, 404', async () => {
 
   const r401 = await fetch(`http://127.0.0.1:${port}/v1/chat/completions`, {
     method: 'POST', headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ model: 'gpt-4o', messages: [] }),
+    body: JSON.stringify({ model: 'gpt-5-mini', messages: [] }),
   });
   assert.equal(r401.status, 401);
 
@@ -152,7 +165,7 @@ test('forwards to upstream with translated headers + rewritten model, streams re
   const r = await fetch(`http://127.0.0.1:${proxyPort}/v1/chat/completions`, {
     method: 'POST',
     headers: { 'content-type': 'application/json', authorization: 'Bearer my-rapid-key' },
-    body: JSON.stringify({ model: 'gpt-4o', messages: [{ role: 'user', content: 'hi' }], stream: true }),
+    body: JSON.stringify({ model: 'gpt-5-mini', messages: [{ role: 'user', content: 'hi' }], stream: true }),
   });
   const text = await r.text();
 
