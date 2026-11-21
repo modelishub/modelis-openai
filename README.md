@@ -69,6 +69,12 @@ curl http://127.0.0.1:8787/health
 
 ---
 
+## RapidAPI capability limits
+
+A RapidAPI key is **chat-only**: text chat and completions. It does **not** support tools / function calling, or vision (image inputs). If you need tools, vision, or longer outputs, sign up at https://modelishub.com for $1 credit and use the Console (`https://modelishub.com/v1`) instead of RapidAPI.
+
+---
+
 ## Tool recipes
 
 ### Direct gateway (Modelis account key)
